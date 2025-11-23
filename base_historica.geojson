@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "raw_base_historica",
+"features": [
+{ "type": "Feature", "properties": { }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -77.768631, -8.2183403 ], [ -77.7688325, -8.2186371 ], [ -77.7683348, -8.218794 ], [ -77.7682426, -8.2185778 ], [ -77.768631, -8.2183403 ] ] ] } },
+{ "type": "Feature", "properties": { }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -77.8042559, -8.2160244 ], [ -77.8040074, -8.2168121 ], [ -77.8037252, -8.2166514 ], [ -77.8034763, -8.2160658 ], [ -77.8042559, -8.2160244 ] ] ] } }
+]
+}
