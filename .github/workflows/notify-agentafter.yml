@@ -4,21 +4,33 @@ on:
   push:
     branches: [main]
     paths:
-      - '**/*.geojson'
-      - '**/*'  # adjust to files that trigger updates
+      - '**/*.geojson'  # Only trigger when GeoJSON files update
 
 jobs:
   notify-kml-repo:
     runs-on: ubuntu-latest
+    env:
+      TARGET_REPO: agentafter/kml-extractor
+      AGENTAFTER_PAT: ${{ secrets.AGENTAFTER_PAT }}
+
     steps:
+      - name: Construct payload
+        id: payload
+        run: |
+          # Build JSON safely using jq (or Node fallback)
+          if command -v jq >/dev/null 2>&1; then
+            payload=$(jq -n --arg c "${GITHUB_SHA}" --arg r "${GITHUB_REF}" --arg s "agentafter/huaka-sigda-data" \
+              '{commit: $c, ref: $r, source: $s}')
+          else
+            payload=$(node -e "console.log(JSON.stringify({commit: process.env.GITHUB_SHA, ref: process.env.GITHUB_REF, source: 'agentafter/huaka-sigda-data'}))")
+          fi
+          echo "payload=$payload" >> $GITHUB_OUTPUT
+
       - name: Send repository dispatch to agentafter/kml-extractor
-        env:
-          TARGET_REPO: agentafter/kml-extractor
         run: |
           event_type="sigda-updated"
-          payload="{\"commit\":\"${GITHUB_SHA}\", \"ref\":\"${GITHUB_REF}\"}"
-          curl -X POST \
-            -H \"Accept: application/vnd.github.everest-preview+json\" \
-            -H \"Authorization: token ${{ secrets.AGENTAFTER_PAT }}\" \
-            https://api.github.com/repos/$TARGET_REPO/dispatches \
-            -d "{\"event_type\":\"$event_type\",\"client_payload\":$payload}"
+          curl -s -f -X POST \
+            -H "Accept: application/vnd.github.everest-preview+json" \
+            -H "Authorization: token $AGENTAFTER_PAT" \
+            "https://api.github.com/repos/$TARGET_REPO/dispatches" \
+            -d "{\"event_type\":\"$event_type\",\"client_payload\":${{ steps.payload.outputs.payload }}}"
