@@ -1,0 +1,25 @@
+# Python/System junk
+__pycache__/
+*.py[cod]
+*$py.class
+.DS_Store
+.vscode/
+
+# Local logs and temporary files
+*.log
+full_report.txt
+sources.csv.bak
+
+# Scraping/Processing artifacts
+raw_*.json
+temp_*.gpkg
+test_raw.json
+test_temp.gpkg
+
+# PMTiles (These are stored in GitHub Releases, not in the repo itself)
+tiles/
+*.pmtiles
+
+# Keep the main database and Kart metadata
+!huaka_sigda.gpkg
+!.kart/
