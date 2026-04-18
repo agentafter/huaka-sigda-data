@@ -6,7 +6,7 @@
 # =============================================================================
 
 # --- CONFIGURATION ---
-REPO_PATH="/home/agentafter/huaka-sigda-data"
+REPO_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 GPKG_FILE="$REPO_PATH/huaka_sigda.gpkg"
 TILES_DIR="$REPO_PATH/tiles"
 REPORT_FILE="$TILES_DIR/tiles_report.txt"

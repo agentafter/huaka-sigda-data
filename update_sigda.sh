@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # --- CONFIGURACIÓN GENERAL ---
-REPO_PATH="/home/agentafter/huaka-sigda-data"
+REPO_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SOURCES_FILE="$REPO_PATH/sources.csv"
 REPORT_FILE="$REPO_PATH/full_report.txt"
 SCRAPER_SCRIPT="$REPO_PATH/scraper.py"
-PMTILES_SCRIPT="/home/agentafter/generate_pmtiles.sh"
+PMTILES_SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/generate_pmtiles.sh"
 MAIN_GPKG="$REPO_PATH/huaka_sigda.gpkg"
 
 # Variables de estado
